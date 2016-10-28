@@ -9,4 +9,4 @@
 - 散列（HashTable）
 - 集合（Set）
 - 二叉查找树（BST）
-- 图（Map）
+- 图（Graph）

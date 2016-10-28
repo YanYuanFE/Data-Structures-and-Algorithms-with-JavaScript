@@ -20,6 +20,10 @@ function BST(){
 	this.inOrder=inOrder;
 	this.preOrder=preOrder;
 	this.postOrder=postOrder;
+	this.getMin=getMin;
+	this.getMax=getMax;
+	this.find=find;
+	this.remove=remove;
 }
 
 // 插入节点
@@ -67,11 +71,86 @@ function preOrder(node){
 	}
 }
 
+// 后序遍历
 function postOrder(node){
 	if(!(node==null)){
 		postOrder(node.left);
 		postOrder(node.right);
 		console.log(node.show()+" ");
+	}
+}
+
+//查找最小值
+
+function getMin(){
+	var current=this.root;
+	while(!(current.left==null)){
+		current=current.left;
+	}
+	return current.data;
+}
+
+//查找最大值
+function getMax(){
+	var current=this.root;
+	while(!(current.right==null)){
+		current=current.right;
+	}
+	return current.data;
+}
+
+//查找给定值
+function find(data){
+	var current=this.root;
+	while(current!=null){
+		if(current.data==data){
+			return current;
+		}
+		else if(data<current.data){
+			current=current.left;
+		}
+		else{
+			current=current.right;
+		}
+	}
+	return null;
+}
+
+// 删除节点
+function remove(data){
+	root=removeNode(this.root,data);
+}
+
+function removeNode(node,data){
+	if(node==null){
+		return null;
+	}
+	if(data==node.data){
+		// 没有子节点的节点
+		if(node.left==null && node.right==null){
+			return null;
+		}
+		// 没有左子结点的节点
+		if(node.left==null){
+			return node.right;
+		}
+		// 没有右子节点的节点
+		if(node.right==null){
+			return node.left;
+		}
+		// 有两个子节点的节点
+		var tempNode=getSmallest(node.right);
+		node.data=tempNode.data;
+		node.right=removeNode(node.right,tempNode.data);
+		return node;
+	}
+	else if(data<node.data){
+		node.left=removeNode(node.left,data);
+		return node;
+	}
+	else{
+		node.right=removeNode(node.right,data);
+		return node;
 	}
 }
 
@@ -85,6 +164,15 @@ nums.insert(21);
 nums.insert(45);
 nums.insert(14);
 nums.insert(9);
+var min=nums.getMin();
+var max=nums.getMax();
+
 inOrder(nums.root);
 preOrder(nums.root);
 postOrder(nums.root);
+
+var found=nums.find(10);
+console.log(found);
+
+console.log("最小值："+min);
+console.log("最大值："+max);

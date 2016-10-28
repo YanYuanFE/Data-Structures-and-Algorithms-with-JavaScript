@@ -1,4 +1,4 @@
-//栈的实现
+//栈
 function Stack(){
 	this.dataStore=[];
 	this.top=0;
